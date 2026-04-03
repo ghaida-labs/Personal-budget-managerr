@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>💰 Personal Budget Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Cairo', sans-serif;
+        background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 25px;
+        padding: 40px;
+        width: 400px;
+        backdrop-filter: blur(15px);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+        color: #fff;
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        font-size: 28px;
+        color: #fff;
+        text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    }
+
+    .section {
+        margin: 20px 0;
+        text-align: right;
+    }
+
+    .section h2 {
+        font-size: 18px;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border: none;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.25);
+        color: #fff;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    input::placeholder {
+        color: rgba(255,255,255,0.7);
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 12px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        background: rgba(255,255,255,0.3);
+        color: #fff;
+        transition: 0.3s;
+        backdrop-filter: blur(5px);
+    }
+
+    button:hover {
+        background: rgba(255,255,255,0.5);
+        color: #000;
+    }
+
+    .result {
+        margin-top: 25px;
+        font-weight: bold;
+        line-height: 1.6;
+        background: rgba(255,255,255,0.2);
+        padding: 15px;
+        border-radius: 15px;
+        text-align: right;
+    }
+
+    .icon {
+        font-size: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>💰 مدير الميزانية الشخصية</h1>
+
+    <div class="section">
+        <h2>💵 دخلك الشهري</h2>
+        <input type="number" id="income" placeholder="دخل شهري (SAR)" value="5000">
+        <p>المبلغ الذي تتقاضاه كل شهر بعد الخصم</p>
+    </div>
+
+    <div class="section">
+        <h2>🛒 مصاريفك</h2>
+        <input type="number" id="expenses" placeholder="مصاريف (SAR)" value="2000">
+        <p>كل ما تدفعه من المصاريف الشهرية</p>
+    </div>
+
+    <div class="section">
+        <h2>🎯 هدف الادخار</h2>
+        <input type="number" id="goal" placeholder="هدف الادخار (SAR)" value="10000">
+        <p>المبلغ الذي تريد ادخاره للوصول لهدفك</p>
+    </div>
+
+    <div class="section">
+        <h2>🏦 القرض</h2>
+        <input type="number" id="loan" placeholder="القرض (SAR)" value="5000">
+        <input type="number" id="rate" placeholder="نسبة الفائدة %" value="5">
+        <input type="number" id="time" placeholder="مدة القرض (سنوات)" value="2">
+        <p>المبلغ المقترض والفائدة والمدة بالسنة</p>
+    </div>
+
+    <button onclick="calculate()">احسب</button>
+
+    <div class="result" id="output"></div>
+</div>
+
+<script>
+function calculate() {
+    const income = parseFloat(document.getElementById('income').value);
+    const expenses = parseFloat(document.getElementById('expenses').value);
+    const goal = parseFloat(document.getElementById('goal').value);
+    const loan = parseFloat(document.getElementById('loan').value);
+    const rate = parseFloat(document.getElementById('rate').value);
+    const time = parseFloat(document.getElementById('time').value);
+
+    let balance = income - expenses;
+    let output = `📊 الرصيد المتبقي: ${balance} SAR<br>`;
+
+    if (balance > 0) {
+        let months = goal / balance;
+        output += `💸 الشهور المطلوبة للوصول للهدف: ${months.toFixed(1)}<br>`;
+    } else {
+        output += `⚠️ المصاريف مرتفعة جدًا! قلل منها.<br>`;
+    }
+
+    let interest = loan * (rate / 100) * time;
+    let total = loan + interest;
+    output += `🏦 المبلغ الإجمالي لسداد القرض: ${total} SAR<br>`;
+
+    output += `<br>✨ شكرًا لاستخدام التطبيق!`;
+
+    document.getElementById('output').innerHTML = output;
+}
+</script>
+
+</body>
+</html>
