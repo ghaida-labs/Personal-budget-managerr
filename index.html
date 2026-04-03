@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>💰 Personal Budget Manager</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f0f8ff; padding: 20px; direction: rtl; }
+    h1 { color: #2c3e50; }
+    input { margin: 5px 0; padding: 5px; width: 100px; }
+    button { padding: 5px 10px; margin-top: 10px; }
+    .result { margin-top: 20px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>💰 Personal Budget Manager 💰</h1>
+
+<label>دخل شهري (SAR):</label><br>
+<input type="number" id="income" value="5000"><br>
+
+<label>مصاريف (SAR):</label><br>
+<input type="number" id="expenses" value="2000"><br>
+
+<label>هدف الادخار (SAR):</label><br>
+<input type="number" id="goal" value="10000"><br>
+
+<label>القرض (SAR):</label><br>
+<input type="number" id="loan" value="5000"><br>
+
+<label>نسبة الفائدة %:</label><br>
+<input type="number" id="rate" value="5"><br>
+
+<label>مدة القرض (سنوات):</label><br>
+<input type="number" id="time" value="2"><br>
+
+<button onclick="calculate()">احسب</button>
+
+<div class="result" id="output"></div>
+
+<script>
+function calculate() {
+    const income = parseFloat(document.getElementById('income').value);
+    const expenses = parseFloat(document.getElementById('expenses').value);
+    const goal = parseFloat(document.getElementById('goal').value);
+    const loan = parseFloat(document.getElementById('loan').value);
+    const rate = parseFloat(document.getElementById('rate').value);
+    const time = parseFloat(document.getElementById('time').value);
+
+    let balance = income - expenses;
+    let output = `📊 الرصيد المتبقي: ${balance} SAR<br>`;
+
+    if (balance > 0) {
+        let months = goal / balance;
+        output += `💸 الشهور المطلوبة للوصول للهدف: ${months.toFixed(1)}<br>`;
+    } else {
+        output += `⚠️ المصاريف مرتفعة جدًا! قلل منها.<br>`;
+    }
+
+    let interest = loan * (rate / 100) * time;
+    let total = loan + interest;
+    output += `🏦 المبلغ الإجمالي لسداد القرض: ${total} SAR<br>`;
+
+    output += `<br>✨ شكرًا لاستخدام التطبيق!`;
+
+    document.getElementById('output').innerHTML = output;
+}
+</script>
+
+</body>
+</html>
